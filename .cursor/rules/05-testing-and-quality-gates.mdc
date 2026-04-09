@@ -1,7 +1,12 @@
 ---
 description: "Testing and quality gate requirements before merge"
 globs:
-  - "**/*"
+  - "**/*.ts"
+  - "**/*.tsx"
+  - "tests/**"
+  - "**/tests/**"
+  - "scripts/**"
+  - "*.{json,mjs,cjs}"
 alwaysApply: false
 ---
 

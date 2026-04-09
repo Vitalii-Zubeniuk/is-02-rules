@@ -1,5 +1,5 @@
 ---
-description: "Math package type consistency using Point type"
+description: "Math package type consistency using GlobalPoint and LocalPoint"
 globs:
   - "packages/math/**/*.ts"
   - "packages/math/**/*.tsx"
@@ -9,12 +9,15 @@ alwaysApply: false
 # Math Point Type Rule
 
 - When editing math-related code, include `packages/math/src/types.ts` in context.
-- Use the canonical `Point` type instead of ad-hoc `{ x, y }` object types.
-- Keep math utility signatures consistent with existing exported types.
+- Use canonical tuple point types `GlobalPoint | LocalPoint` instead of ad-hoc `{ x, y }` object types or non-existent `Point`.
+- If a local alias is introduced, it must alias `GlobalPoint | LocalPoint`.
+- Keep math utility signatures and generics consistent with existing exports, for example `P extends GlobalPoint | LocalPoint`.
+- Keep container types aligned with `types.ts` patterns (for example `Line<P>`, `LineSegment<P>`, `Triangle<P>`, `Polygon<P>` where `P extends GlobalPoint | LocalPoint`).
 
 ## How to verify
 
 - Confirm math changes reference existing types from `packages/math/src/types.ts`.
-- Confirm new function signatures use `Point` where coordinates are represented.
-- Confirm no new inline `{ x, y }` type literals are introduced in math APIs.
+- Confirm coordinate signatures use `GlobalPoint | LocalPoint` (or a documented alias to that union), not `Point`.
+- Confirm generic constraints follow exported patterns (for example `P extends GlobalPoint | LocalPoint`).
+- Confirm no new inline `{ x, y }` point type literals are introduced in math APIs.
 - Confirm exports remain type-compatible with package consumers.

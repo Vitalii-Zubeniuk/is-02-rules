@@ -3,6 +3,7 @@ description: "Review a change against Excalidraw package boundaries and dependen
 argument-hint: "Describe the planned or implemented change"
 ---
 
+# Architecture Check Command
 Validate this change against project architecture rules:
 
 {{args}}

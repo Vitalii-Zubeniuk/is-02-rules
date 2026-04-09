@@ -3,6 +3,7 @@ description: "Scaffold a new React component following Excalidraw project conven
 argument-hint: "Component name and target package/folder (e.g. MyButton packages/excalidraw/components)"
 ---
 
+# /create-component
 Create a new React component following project conventions:
 
 {{args}}

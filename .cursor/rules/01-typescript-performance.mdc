@@ -9,14 +9,15 @@ alwaysApply: false
 # TypeScript And Performance Rule
 
 - Write new code in TypeScript.
-- Prefer immutable data (`const`, `readonly`) where possible.
-- Prefer lower-allocation solutions when equivalent in readability.
-- Use optional chaining (`?.`) and nullish coalescing (`??`) instead of verbose null checks.
-- Avoid introducing avoidable CPU overhead in hot paths.
+- In Excalidraw core rendering/canvas hot paths, avoid allocating new objects/arrays inside frame loops; reuse existing buffers/maps and hoist reusable temporaries outside the loop.
+- In scene/element update flows, treat shared element collections as immutable (`readonly` inputs, `const` references, copy-on-write when needed) and do not mutate shared arrays in place.
+- In collaboration/networking and input processing code, prefer `?.` and `??` for partial payloads/events and avoid verbose guard ladders that obscure fast-path logic.
+- Avoid heavy abstractions in draw/update hot paths (deep wrapper chains, per-element closures, unnecessary object reshaping); prefer direct loops and simple data access patterns.
 
 ## How to verify
 
 - Confirm changed source files are TypeScript (`.ts` or `.tsx`).
-- Confirm no new mutable variables are introduced unless necessary.
-- Confirm null handling uses `?.` and `??` where suitable.
-- Confirm hot-path loops avoid unnecessary allocations.
+- Confirm rendering/update loops do not allocate per-iteration helper objects/arrays when a reusable buffer would work.
+- Confirm element list handling uses `const`/`readonly` semantics and does not mutate shared scene arrays in place.
+- Confirm collaboration/input parsing uses `?.` and `??` for nullable fields/events.
+- Confirm draw/update hot paths do not introduce heavy abstractions that add avoidable CPU overhead.

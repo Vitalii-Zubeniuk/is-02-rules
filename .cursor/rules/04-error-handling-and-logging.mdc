@@ -8,14 +8,16 @@ alwaysApply: false
 
 # Error Handling And Logging Rule
 
-- Wrap async operations with proper `try/catch` when failures are expected or recoverable.
-- Preserve or add error boundaries for React surfaces that can fail.
-- Log errors with useful context (operation, identifiers, relevant state).
-- Avoid swallowing errors silently.
+- In Excalidraw async flows, wrap `loadScene()`, `saveScene()`, and `syncLoop()` in explicit `try/catch`, and handle fallback/recovery paths.
+- Treat `CanvasRenderer`, `AppStateProvider`, and `Room`/`Collab` components as risky React surfaces; preserve or add `ErrorBoundary` around Canvas renderer paths and app shell boundaries.
+- For scene load/save, sync, undo/redo, and network requests, report errors through existing telemetry/error-reporting (`sendTelemetryError` or `errorReporter.capture`) instead of ad-hoc logging only.
+- Always attach minimum context payload: `operation`, relevant identifiers (`sceneId`, `userId`), `selectionState`, `appState` snapshot, and `stack`.
+- Avoid silent failure patterns (empty `catch`, dropped promises, ignored network retries).
 
 ## How to verify
 
-- Confirm new async flows include explicit failure handling.
-- Confirm UI-level risky integrations are protected by boundaries.
-- Confirm logs include context and are actionable.
-- Confirm no empty `catch` blocks are introduced.
+- Confirm `loadScene()`, `saveScene()`, and `syncLoop()` changes include explicit `try/catch` with recovery/propagation behavior.
+- Confirm risky surfaces (`CanvasRenderer`, `AppStateProvider`, `Room`/`Collab`) are covered by an `ErrorBoundary` at the right level.
+- Confirm scene/sync/undo-redo/network failures call `sendTelemetryError` or `errorReporter.capture`.
+- Confirm every captured error includes `operation`, identifiers (`sceneId`/`userId`), `selectionState`, `appState` snapshot, and `stack`.
+- Confirm there are no empty `catch` blocks or swallowed async errors.

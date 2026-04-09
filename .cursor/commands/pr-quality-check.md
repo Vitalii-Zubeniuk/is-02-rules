@@ -3,6 +3,8 @@ description: "Prepare and validate a change before PR (tests, lint, formatting, 
 argument-hint: "Scope of changes or files to validate"
 ---
 
+# /pr-quality-check
+
 Run a pre-PR quality check for this scope:
 
 {{args}}
