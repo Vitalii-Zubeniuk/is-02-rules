@@ -23,6 +23,14 @@
 - Keep components small and focused
 - Use CSS modules for component styling
 
+## Project Architecture Rules
+
+- Keep reusable/editor domain logic inside `packages/*`; keep app wiring/integration logic inside `excalidraw-app/*`
+- Prefer changes in `packages/excalidraw` (or lower-level packages) when behavior should apply to both the app and embedded package consumers
+- Respect dependency direction: `common` -> `math` -> `element` -> `excalidraw` -> `excalidraw-app`; do not introduce reverse dependencies
+- Avoid cross-package deep imports from internal files; prefer public exports/index entry points
+- If architecture is affected, update the relevant docs in `dev-docs/` and mention the package boundary in code comments/PR notes
+
 ## Naming Conventions
 
 - Use PascalCase for component names, interfaces, and type aliases

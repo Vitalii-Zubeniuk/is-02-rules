@@ -1,0 +1,20 @@
+---
+description: "Math package type consistency using Point type"
+globs:
+  - "packages/math/**/*.ts"
+  - "packages/math/**/*.tsx"
+alwaysApply: false
+---
+
+# Math Point Type Rule
+
+- When editing math-related code, include `packages/math/src/types.ts` in context.
+- Use the canonical `Point` type instead of ad-hoc `{ x, y }` object types.
+- Keep math utility signatures consistent with existing exported types.
+
+## How to verify
+
+- Confirm math changes reference existing types from `packages/math/src/types.ts`.
+- Confirm new function signatures use `Point` where coordinates are represented.
+- Confirm no new inline `{ x, y }` type literals are introduced in math APIs.
+- Confirm exports remain type-compatible with package consumers.

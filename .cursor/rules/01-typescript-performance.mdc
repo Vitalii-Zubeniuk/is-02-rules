@@ -1,0 +1,22 @@
+---
+description: "TypeScript style and performance defaults for this monorepo"
+globs:
+  - "**/*.ts"
+  - "**/*.tsx"
+alwaysApply: false
+---
+
+# TypeScript And Performance Rule
+
+- Write new code in TypeScript.
+- Prefer immutable data (`const`, `readonly`) where possible.
+- Prefer lower-allocation solutions when equivalent in readability.
+- Use optional chaining (`?.`) and nullish coalescing (`??`) instead of verbose null checks.
+- Avoid introducing avoidable CPU overhead in hot paths.
+
+## How to verify
+
+- Confirm changed source files are TypeScript (`.ts` or `.tsx`).
+- Confirm no new mutable variables are introduced unless necessary.
+- Confirm null handling uses `?.` and `??` where suitable.
+- Confirm hot-path loops avoid unnecessary allocations.

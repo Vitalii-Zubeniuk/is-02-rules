@@ -1,0 +1,20 @@
+---
+description: "Testing and quality gate requirements before merge"
+globs:
+  - "**/*"
+alwaysApply: false
+---
+
+# Testing And Quality Gate Rule
+
+- Always attempt to fix reported problems after edits.
+- Prefer validating with targeted checks first, then full checks.
+- Offer to run `yarn test:app` after modifications.
+- For high-confidence changes, run broader validation (`yarn test:all`) when feasible.
+
+## How to verify
+
+- Confirm changed files have no new lint/type/test issues.
+- Confirm `yarn test:app` was offered or executed after meaningful code edits.
+- Confirm failures are addressed or explicitly documented with reason.
+- Confirm no unrelated failing checks are hidden.

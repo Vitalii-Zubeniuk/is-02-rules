@@ -1,0 +1,25 @@
+---
+description: "Monorepo architecture boundaries and dependency direction"
+globs:
+  - "**/*.ts"
+  - "**/*.tsx"
+  - "**/*.md"
+alwaysApply: false
+---
+
+# Architecture Boundary Rule
+
+- Keep reusable editor domain logic inside `packages/*`.
+- Keep app wiring and deployment-specific integration inside `excalidraw-app/*`.
+- If behavior affects both app and package consumers, prefer implementing in `packages/excalidraw` (or lower package layers).
+- Respect dependency direction:
+  - `common` -> `math` -> `element` -> `excalidraw` -> `excalidraw-app`
+- Do not introduce reverse dependencies between these layers.
+- Avoid deep cross-package internal imports; use public exports and entry points.
+
+## How to verify
+
+- Confirm new shared logic is not placed only in `excalidraw-app`.
+- Confirm imports do not create lower-layer dependency on higher layers.
+- Confirm cross-package imports use published entry points, not internal private files.
+- Confirm architecture-impacting changes update relevant docs in `dev-docs/`.
